@@ -2,9 +2,11 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/gpio.h"
+#include "WIFI.h"
 
 void app_main(void)
 {
+    wifi_init_sta();
     printf("Hello world!\n");
     gpio_pad_select_gpio(2);
     gpio_set_direction(2, GPIO_MODE_OUTPUT);
