@@ -1,20 +1,14 @@
 #include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "driver/gpio.h"
-#include "WIFI.h"
+#include <wifi_manager.h>
 
 void app_main(void)
 {
-    wifi_init_sta();
-    printf("Hello world!\n");
-    gpio_pad_select_gpio(2);
-    gpio_set_direction(2, GPIO_MODE_OUTPUT);
-    while (1)
-    {
-        gpio_set_level(2, 0);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        gpio_set_level(2, 1);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-    }
+    wifi_credentials_t wifi_credentials = {
+        .ssid = "sussy_baka",
+        .password = "luffy@gear5",
+    };
+
+    wifi_manager_init();
+    wifi_manager_connect_sta(&wifi_credentials, 10000);
+    vTaskDelay(10000 / portTICK_PERIOD_MS);
 }
