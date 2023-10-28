@@ -79,14 +79,6 @@ esp_err_t init_http_server(void)
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.uri_match_fn = httpd_uri_match_wildcard;
 
-    httpd_uri_t root = {
-        .uri = "/*",
-        .method = HTTP_GET,
-        .handler = default_url,
-        .user_ctx = NULL};
-
-
-    // Start the HTTP Server
     err = httpd_start(&server, &config);
     if (err != ESP_OK)
     {
@@ -94,7 +86,11 @@ esp_err_t init_http_server(void)
         return err;
     }
 
-    // Register URI handler
+    httpd_uri_t root = {
+        .uri = "/*",
+        .method = HTTP_GET,
+        .handler = default_url,
+        .user_ctx = NULL};
     err = httpd_register_uri_handler(server, &root);
     if (err != ESP_OK)
     {
